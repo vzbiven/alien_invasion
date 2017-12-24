@@ -7,4 +7,4 @@ class Settings():
         """Инициализурет настройки игры"""
         self.screen_width = 600
         self.screen_height = 400
-        self.bg_color = (9, 0, 133)
+        self.bg_color = (115, 104, 255)

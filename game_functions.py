@@ -45,6 +45,22 @@ def check_events(ai_settings, screen, ship, bullets):
             check_keyup_events(event, ship)
 
 
+def check_fleet_edges(ai_settings, aliens):
+    """Рекагирует на достижение пришельцем края экрана"""
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(ai_settings, aliens)
+            break
+
+
+def change_fleet_direction(ai_settings, aliens):
+    """Опускает весь флот и меняет направление флота."""
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed
+    ai_settings.fleet_direction *= -1
+
+
+
 def update_screen(ai_settings, screen, ship, aliens, bullets):
     """Обновляет изображения на экране и выводит новый экран."""
     # При каждом прохоже цикла перерисовывается экран
@@ -68,8 +84,12 @@ def update_bullets(bullets):
             bullets.remove(bullet)
 
 
-def update_aliens(aliens):
-    """Обновляет позиции всех пришельцев во флоте"""
+def update_aliens(ai_settings, aliens):
+    """
+    Проверяет, достиг ли флот экрана,
+    после чего обновляет позиции всех пришельцев во флоте
+    """
+    check_fleet_edges(ai_settings, aliens)
     aliens.update()
 
 

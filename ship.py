@@ -12,6 +12,8 @@ class Ship:
 
         # Загрузка изображения корабля и получение прямоугольника
         self.image = pygame.image.load('images/ship.bmp')
+        #повернуть корабль на 90 градусов
+        self.image = pygame.transform.rotate(self.image, 270)
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         #Каждый новый корабль появляется у левого края экрана

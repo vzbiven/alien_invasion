@@ -97,7 +97,7 @@ def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
         create_fleet(ai_settings, screen, ship, aliens)
 
 
-def update_aliens(ai_settings, aliens):
+def update_aliens(ai_settings, ship, aliens):
     """
     Проверяет, достиг ли флот экрана,
     после чего обновляет позиции всех пришельцев во флоте
@@ -105,6 +105,9 @@ def update_aliens(ai_settings, aliens):
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
 
+    # Проверка коллизий "пришелец-корабль"
+    if pygame.sprite.spritecollideany(ship, aliens):
+        print("Ship hit!!!")
 
 def get_number_aliens_x(ai_settings, alien_width):
     """Вычисляет количество пришельцев в ряду"""

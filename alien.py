@@ -21,6 +21,12 @@ class Alien(Sprite):
         # Сохраненине точной позиции пришельца
         self.x = float(self.rect.x)
 
+    
+    def update(self):
+        """перемещает пришельца враво"""
+        self.x += self.ai_settings.alien_speed_factor
+        self.rect.x = self.x
+
     def blitme(self):
         """Выводит пришельца в текущем положении"""
         self.screen.blit(self.image, self.rect)

@@ -68,6 +68,11 @@ def update_bullets(bullets):
             bullets.remove(bullet)
 
 
+def update_aliens(aliens):
+    """Обновляет позиции всех пришельцев во флоте"""
+    aliens.update()
+
+
 def get_number_aliens_x(ai_settings, alien_width):
     """Вычисляет количество пришельцев в ряду"""
     available_space_x = ai_settings.screen_width - 2 * alien_width

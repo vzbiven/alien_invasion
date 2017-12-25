@@ -57,8 +57,9 @@ def update_screen(ai_settings, screen, ship, bullets):
 
 def update_bullets(bullets):
     """Обновляет позиции пуль и удаляет старые пули."""
+    
     bullets.update()
     # Удаление пуль вышедших за край экрана.
     for bullet in bullets.copy():
-        if bullet.rect.bottom <= 0:
+        if bullet.rect.right >= bullet.screen_rect.right:
             bullets.remove(bullet)

@@ -2,7 +2,7 @@
 
 import pygame
 
-class Ship():
+class Ship:
     """Корабль игрока"""
 
     def __init__(self, ai_settings, screen):

@@ -1,5 +1,6 @@
 """Основыне функции игры."""
 import sys
+from time import sleep
 
 import pygame
 
@@ -96,8 +97,24 @@ def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
         bullets.empty()
         create_fleet(ai_settings, screen, ship, aliens)
 
+def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+    """Обрабатывает столкновение корабля с пришельцем"""
+    # Уменьшение ships_left
+    stats.ships_left -= 1
 
-def update_aliens(ai_settings, ship, aliens):
+    # Очистка списка пришельцев и пуль
+    aliens.empty()
+    bullets.empty()
+
+    # Создание нового флота и размещение корабля в центре
+    create_fleet(ai_settings, screen, ship, aliens)
+    ship.center_ship()
+
+    #Пауза
+    sleep(0.5)
+
+
+def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
     """
     Проверяет, достиг ли флот экрана,
     после чего обновляет позиции всех пришельцев во флоте
@@ -107,7 +124,7 @@ def update_aliens(ai_settings, ship, aliens):
 
     # Проверка коллизий "пришелец-корабль"
     if pygame.sprite.spritecollideany(ship, aliens):
-        print("Ship hit!!!")
+        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
 
 def get_number_aliens_x(ai_settings, alien_width):
     """Вычисляет количество пришельцев в ряду"""

@@ -34,7 +34,7 @@ class Scoreboard:
         self.score_rect.right = self.screen_rect.right - 10
         self.score_rect.top = 10
 
-    
+
     def prep_high_score(self):
         """Преобразует рекордный счет в графическое изображение."""
         high_score = int(round(self.stats.high_score, -1))
@@ -57,7 +57,7 @@ class Scoreboard:
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom + 5
-    
+
 
     def prep_ships(self):
         """Сообщает количесво оставшихся кораблей"""

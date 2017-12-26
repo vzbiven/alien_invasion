@@ -63,6 +63,7 @@ def chek_play_button(ai_settings, screen, stats, sb,  play_button, ship,
         start_game(ai_settings, stats, sb, screen, ship, aliens, bullets)
 
 def start_game(ai_settings, stats, sb, screen, ship, aliens, bullets):
+    """Запускает игру"""
     # Указатель мыши скрывается
     pygame.mouse.set_visible(False)
     stats.reset_stats()

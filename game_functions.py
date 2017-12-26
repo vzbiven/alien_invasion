@@ -55,6 +55,8 @@ def chek_play_button(ai_settings, screen, stats, play_button, ship,
     """Запускает новую игру при нажатии кнопки Play"""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
+        # Указатель мыши скрывается
+        pygame.mouse.set_visible(False)
         stats.reset_stats()
         stats.game_active = True
 

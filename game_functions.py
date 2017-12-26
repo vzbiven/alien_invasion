@@ -7,7 +7,7 @@ import pygame
 from bullet import Bullet
 from alien import Alien
 
-def check_keydown_events(event, ai_settings, screen, ship, bullets):
+def check_keydown_events(event, ai_settings, stats, screen, ship, aliens, bullets):
     """Реагирует на нажатие клавиш."""
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
@@ -17,6 +17,8 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
         fire_bullet(ai_settings, screen, ship, bullets)
     elif event.key == pygame.K_q:
         sys.exit()
+    elif event.key == pygame.K_p and not stats.game_active:
+        start_game(ai_settings, stats, screen, ship, aliens, bullets)
 
 
 def fire_bullet(ai_settings, screen, ship, bullets):
@@ -42,7 +44,7 @@ def check_events(ai_settings, screen, stats, play_button, ship,
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, ship, bullets)
+            check_keydown_events(event, ai_settings, stats, screen, ship, aliens, bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -55,19 +57,22 @@ def chek_play_button(ai_settings, screen, stats, play_button, ship,
     """Запускает новую игру при нажатии кнопки Play"""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
-        # Указатель мыши скрывается
-        pygame.mouse.set_visible(False)
-        stats.reset_stats()
-        stats.game_active = True
+        start_game(ai_settings, stats, screen, ship, aliens, bullets)
 
-        # Очистка списков пришельцев и пуль
-        aliens.empty()
-        bullets.empty()
+def start_game(ai_settings, stats, screen, ship, aliens, bullets):
+    # Указатель мыши скрывается
+    pygame.mouse.set_visible(False)
+    stats.reset_stats()
+    stats.game_active = True
 
-        # Создание нового флота и размещение корабля в центре
-        create_fleet(ai_settings, screen, ship, aliens)
-        ship.center_ship()
+    # Очистка списков пришельцев и пуль
+    aliens.empty()
+    bullets.empty()
 
+    # Создание нового флота и размещение корабля в центре
+    create_fleet(ai_settings, screen, ship, aliens)
+    ship.center_ship()
+    
 
 def check_fleet_edges(ai_settings, aliens):
     """Рекагирует на достижение пришельцем края экрана"""
@@ -95,7 +100,7 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button
     ship.blitme()
     aliens.draw(screen)
 
-    # Кнопка Playотображается в том случае, если игра неактивна
+    # Кнопка Play отображается в том случае, если игра неактивна
     if not stats.game_active:
         play_button.draw_button()
 

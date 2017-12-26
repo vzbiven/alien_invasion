@@ -99,19 +99,23 @@ def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
 
 def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
     """Обрабатывает столкновение корабля с пришельцем"""
-    # Уменьшение ships_left
-    stats.ships_left -= 1
+    if stats.ships_left > 0:
+        # Уменьшение ships_left
+        stats.ships_left -= 1
 
-    # Очистка списка пришельцев и пуль
-    aliens.empty()
-    bullets.empty()
+        # Очистка списка пришельцев и пуль
+        aliens.empty()
+        bullets.empty()
 
-    # Создание нового флота и размещение корабля в центре
-    create_fleet(ai_settings, screen, ship, aliens)
-    ship.center_ship()
+        # Создание нового флота и размещение корабля в центре
+        create_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
 
-    #Пауза
-    sleep(0.5)
+        #Пауза
+        sleep(0.5)
+    
+    else:
+        stats.game_active = False
 
 def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
     "Проверяет, добрались ли пришельци до нижнего края экрана"

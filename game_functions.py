@@ -7,6 +7,16 @@ import pygame
 from bullet import Bullet
 from alien import Alien
 
+def write_high_score(stats):
+    filename = 'save/record.txt'
+    with open(filename, 'r') as file_obj:
+        current_record = int(file_obj.read())
+    if stats.high_score > current_record:
+        with open(filename, 'w') as file_obj:
+            file_obj.write(str(stats.high_score))
+    else:
+        pass
+
 def check_keydown_events(event, ai_settings, stats, sb, screen, ship, aliens, bullets):
     """Реагирует на нажатие клавиш."""
     if event.key == pygame.K_RIGHT:
@@ -16,6 +26,7 @@ def check_keydown_events(event, ai_settings, stats, sb, screen, ship, aliens, bu
     elif event.key == pygame.K_SPACE:
         fire_bullet(ai_settings, screen, ship, bullets)
     elif event.key == pygame.K_q:
+        write_high_score(stats)
         sys.exit()
     elif event.key == pygame.K_p and not stats.game_active:
         start_game(ai_settings, stats, sb, screen, ship, aliens, bullets)
@@ -42,6 +53,7 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship,
     """Обрабатывает нажатия клавишь и события мыши."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            write_high_score(stats)
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             check_keydown_events(event, ai_settings, stats, sb, screen, ship, aliens, bullets)

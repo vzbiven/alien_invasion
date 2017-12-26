@@ -1,6 +1,10 @@
 import pygame.font
+from pygame.sprite import Group
+from ship import Ship
+
 class Scoreboard:
     """Класс для вывода игровой информации"""
+
     def __init__(self, ai_settings, screen, stats):
         """Инициавлизирует атрибуты подсчета очков"""
         self.screen = screen
@@ -15,6 +19,7 @@ class Scoreboard:
         self.prep_score()
         self.prep_high_score()
         self.prep_level()
+        self.prep_ships()
 
 
     def prep_score(self):
@@ -52,6 +57,19 @@ class Scoreboard:
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom + 5
+    
+
+    def prep_ships(self):
+        """Сообщает количесво оставшихся кораблей"""
+        self.ships = Group()
+        for ship_number in range(self.stats.ships_left):
+            ship = Ship(self.ai_settings, self.screen)
+            #new litle ship image
+            ship.image = pygame.image.load('images/lil_ship.bmp')
+            ship.rect = ship.image.get_rect()
+            ship.rect.x = 5 + ship_number * ship.rect.width
+            ship.rect.y = 5
+            self.ships.add(ship)
 
 
     def show_score(self):
@@ -59,3 +77,4 @@ class Scoreboard:
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
         self.screen.blit(self.level_image, self.level_rect)
+        self.ships.draw(self.screen)

@@ -72,6 +72,7 @@ def start_game(ai_settings, stats, sb, screen, ship, aliens, bullets):
     sb.prep_score()
     sb.prep_high_score()
     sb.prep_level()
+    sb.prep_ships()
 
     # Очистка списков пришельцев и пуль
     aliens.empty()
@@ -147,11 +148,14 @@ def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship, aliens, 
         sb.prep_level()
         create_fleet(ai_settings, screen, ship, aliens)
 
-def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+def ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets):
     """Обрабатывает столкновение корабля с пришельцем"""
     if stats.ships_left > 0:
         # Уменьшение ships_left
         stats.ships_left -= 1
+
+        #Обновление колв-ва кораблей
+        sb.prep_ships()
 
         # Очистка списка пришельцев и пуль
         aliens.empty()
@@ -168,16 +172,16 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
         stats.game_active = False
         pygame.mouse.set_visible(True)
 
-def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
+def check_aliens_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets):
     "Проверяет, добрались ли пришельци до нижнего края экрана"
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
             # Происходит то же, что и при столкновении с кораблем
-            ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+            ship_hit(ai_settings, stats, sb, screen, ship, aliens, bullets)
             break
 
-def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
+def update_aliens(ai_settings, stats, screen, sb, ship, aliens, bullets):
     """
     Проверяет, достиг ли флот экрана,
     после чего обновляет позиции всех пришельцев во флоте
@@ -187,9 +191,9 @@ def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
 
     # Проверка коллизий "пришелец-корабль"
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+        ship_hit(ai_settings, stats, screen, sb, ship, aliens, bullets)
     # Проверка пришльцев, добравшихся до нижнего края экрана
-    check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets)
+    check_aliens_bottom(ai_settings, stats, screen, sb, ship, aliens, bullets)
 
 def get_number_aliens_x(ai_settings, alien_width):
     """Вычисляет количество пришельцев в ряду"""

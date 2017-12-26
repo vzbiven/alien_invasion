@@ -7,13 +7,13 @@ class Settings():
         """Инициализурет статические настройки игры"""
         self.screen_width = 700
         self.screen_height = 450
-        self.bg_color = (70, 50, 90)
+        self.bg_color = (50, 90, 70)
         #настройки корабля
         self.ship_limit = 3
         #параметры пули
-        self.bullet_width = 3
+        self.bullet_width = 30
         self.bullet_height = 15
-        self.bullet_color = 255, 60, 60
+        self.bullet_color = 50, 25, 25
         self.bullets_allowed = 3
         # aliens settings
         self.fleet_drop_speed = 10

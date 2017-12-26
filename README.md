@@ -3,6 +3,3 @@
 ### Made with the pygame libary
 #### Guided by "Pyhon Crash Course" book
 ![Gameplay](/images/gameplay.gif)
-=======
-#### Guided by "Pyhon Crash Course" book
->>>>>>> parent of f8b3192... what have i done...
